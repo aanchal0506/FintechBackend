@@ -52,7 +52,7 @@ const sendEmail = async (to, subject, text, html) => {
 };
 
 async function sendRegistrationEmail(userEmail, name) {
-    // console.log("📨 sendRegistrationEmail called");
+    // console.log("sendRegistrationEmail called");
     // console.log("Recipient:", userEmail);
     // console.log("Name:", name);
 
