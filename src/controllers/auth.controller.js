@@ -1,5 +1,6 @@
 const userModel = require("../models/user.model")
 const jwt = require('jsonwebtoken')
+const emailService = require("../services/email.service")
 /* 
 -User Register Controller
 -POST /api/auth/register
@@ -60,10 +61,14 @@ async function userLoginController(req, res){
         },
         token
     })
+    console.log("response is sent")
+    emailService.sendRegistrationEmail(user.email, user.name)
+    .catch(error => {
+        console.error("Failed to send email:", error);
+    });
 }
 
 module.exports  = {
     userRegisterController,
     userLoginController
-
 }
