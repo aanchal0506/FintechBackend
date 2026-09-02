@@ -2,7 +2,7 @@
 const express = require("express")
 const cookieParser  = require("cookie-parser")
 
-//routes
+//routes required 
 const authRouter = require("./routes/auth.routes")
 const accountRouter = require("./routes/account.routes")
 
