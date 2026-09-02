@@ -50,7 +50,7 @@ const sendEmail = async (to, subject, text, html) => {
         console.error(error);
     }
 };
-
+// Registration email
 async function sendRegistrationEmail(userEmail, name) {
     // console.log("sendRegistrationEmail called");
     // console.log("Recipient:", userEmail);
@@ -122,7 +122,7 @@ Fintech Backend Team
     console.log("send email is working")
     await sendEmail(userEmail, subject, text, html);
 }
-
+//Transaction successful email
 async function sendTransactionEmail(userEmail, name, amount, toAccount) {
 
     const subject = "Money Transfer Successful";
@@ -189,7 +189,7 @@ Thank you for using our service.
 await sendEmail(userEmail, subject, text, html);
    
 }
-
+//Transaction unsucessful email
 async function sendTransactionFailureEmail(
     userEmail,
     name,
