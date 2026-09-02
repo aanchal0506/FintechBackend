@@ -123,6 +123,123 @@ Fintech Backend Team
     await sendEmail(userEmail, subject, text, html);
 }
 
+async function sendTransactionEmail(userEmail, name, amount, toAccount) {
+
+    const subject = "Money Transfer Successful";
+
+    const text = `
+Hi ${name},
+
+Your money transfer was successful.
+
+Amount: ₹${amount}
+Transferred to Account: ${toAccount}
+
+Your transaction has been completed successfully.
+
+Thank you for using our service.
+`;
+
+    const html = `
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="UTF-8">
+    <title>Money Transfer Successful</title>
+</head>
+
+<body style="font-family: Arial, sans-serif; line-height: 1.6;">
+
+    <h2>Money Transfer Successful ✅</h2>
+
+    <p>Hi <strong>${name}</strong>,</p>
+
+    <p>
+        Your money transfer has been completed successfully.
+    </p>
+
+    <div style="padding: 15px; border: 1px solid #ddd; border-radius: 8px;">
+
+        <p>
+            <strong>Amount:</strong> ₹${amount}
+        </p>
+
+        <p>
+            <strong>Transferred To:</strong> ${toAccount}
+        </p>
+
+        <p>
+            <strong>Status:</strong> Completed
+        </p>
+
+    </div>
+
+    <p>
+        Thank you for using our service.
+    </p>
+
+    <p>
+        Regards,<br>
+        <strong>FinTech Team</strong>
+    </p>
+
+</body>
+</html>
+`;
+await sendEmail(userEmail, subject, text, html);
+   
+}
+
+async function sendTransactionFailureEmail(
+    userEmail,
+    name,
+    amount,
+    fromAccount
+) {
+
+    const subject = "Money Transfer Failed";
+
+    const text = `
+Hi ${name},
+
+Your money transfer could not be completed.
+
+Amount: ₹${amount}
+From Account: ${fromAccount}
+Status: Failed
+
+No money has been transferred.
+
+Regards,
+FinTech Team
+`;
+
+    const html = `
+<h2>Money Transfer Failed </h2>
+
+<p>Hi <strong>${name}</strong>,</p>
+
+<p>Your money transfer could not be completed.</p>
+
+<p><strong>Amount:</strong> ₹${amount}</p>
+
+<p><strong>From Account:</strong> ${fromAccount}</p>
+
+<p><strong>Status:</strong> Failed</p>
+
+<p><strong>No money has been transferred.</strong></p>
+
+<p>
+    Regards,<br>
+    <strong>FinTech Team</strong>
+</p>
+`;
+
+    await sendEmail(userEmail, subject, text, html);
+}
+
 module.exports = {
-    sendRegistrationEmail
+    sendRegistrationEmail,
+    sendTransactionEmail,
+    sendTransactionFailureEmail
 };
