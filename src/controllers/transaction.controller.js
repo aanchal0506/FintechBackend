@@ -87,29 +87,29 @@ async function createTransaction(req, res){
     const session = await mongoose.startSession()
     session.startTransaction() //for step 5 to 8 either everything is completed or everything is reverted
 
-    const transaction = await transactionModel.create({
+    const transaction = await transactionModel.create([{
         fromAccount,toAccount,amount,idempotencyKey,status : "PENDING"
-    },{session})//pass session to include in session
+    }],{session})//pass session to include in session
     
     
     //Create DEBIT ledger entry
-    const debitLedgerEntry = await transactionModel.create({
+    const debitLedgerEntry = await transactionModel.create([{
         account : fromAccount,
         amount : amount ,
         transaction : transaction._id,
         type : "DEBIT"
-     },{
+     }],{
         session
      })
 
 
      //Create CREDIT ledger entry
-    const creditLedgerEntry = await transactionModel.create({
+    const creditLedgerEntry = await transactionModel.create([{
         account : toAccount,
         amount : amount ,
         transaction : transaction._id,
         type : "CREDIT"
-     },{
+     }],{
         session
      })
 
@@ -145,7 +145,6 @@ async function createInitialFundsTransaction(req,res){
     }
 
     const fromUserAccount = await accountModel.findOne({
-        systemUser : true,
         user : req.user._id
     })
     if(!fromUserAccount){
@@ -156,30 +155,28 @@ async function createInitialFundsTransaction(req,res){
     const session = await mongoose.startSession()
     session.startTransaction()
 
-    const transaction = await transactionModel.create({
+    const transaction = new transactionModel({
         fromAccount : fromUserAccount._id,
         toAccount ,
         amount,
         idempotencyKey,
         status : "PENDING"
 
-    },{
-        session
     })
 
-    const debitLedgerEntry = await ledgerModel.create({
+    const debitLedgerEntry = await ledgerModel.create([{
         account : fromUserAccount._id,
         amount : amount,
         transaction : transaction._id,
         type :"DEBIT"
-    },{session})
+    }],{session})
 
-    const creditLedgerEntry = await ledgerModel.create({
+    const creditLedgerEntry = await ledgerModel.create([{
         account : toAccount,
         amount : amount,
         transaction : transaction._id,
         type :"CREDIT"
-    },{session})
+    }],{session})
     transaction.status ="COMPLETED"
     await transaction.save({
         session

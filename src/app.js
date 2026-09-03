@@ -14,5 +14,5 @@ app.use(cookieParser())
 // use routes
 app.use("/api/auth", authRouter)
 app.use("/api/accounts",accountRouter)
-app.use("api/transactions",transactionRouter)
+app.use("/api/transactions",transactionRouter)
 module.exports = app 
