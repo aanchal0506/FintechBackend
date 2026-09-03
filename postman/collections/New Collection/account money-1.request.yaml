@@ -1,0 +1,8 @@
+$kind: http-request
+name: account money
+url: http://localhost:3000/api/accounts
+method: POST
+body:
+  type: json
+  content: "\r\n{\r\n  \"currency\": \"INR\"\r\n}"
+order: 3462584511738732

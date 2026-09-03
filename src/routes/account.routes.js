@@ -8,7 +8,13 @@ const router = express.Router()
 //create mew account // protected route 
 router.post("/",authMiddleware.authMiddleware,accountController.createAccountController)
 
+// GET /api/accounts/
+//get all accounts of logged in user
+//protected api
 
+router.get("/",authMiddleware.authMiddleware,
+    accountController.getUserAccountController
+)
 
 
 module.exports = router ;
