@@ -78,10 +78,13 @@ async function userLogoutController(req, res){
             message : "User logout successfully" 
         })
     }
-    res.cookie("token","")
+    
     await tokenBlacklistModel.create({
         token : token
     })
+    res.clearCookie("token")
+
+
     res.status(200).json({
         message : "User logout Successfully"
     })
